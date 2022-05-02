@@ -5,7 +5,7 @@ enum PrismaErros {
   UniqueConstraintFail = 'P2002',
 }
 
-export const handleDatabaseErros = (e: PrismaClientError): Error => {
+export const handleDatabaseErrors = (e: PrismaClientError): Error => {
   switch (e.code) {
     case PrismaErros.UniqueConstraintFail:
       return new UniqueConstraintError(e);
