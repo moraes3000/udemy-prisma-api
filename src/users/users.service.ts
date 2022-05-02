@@ -1,8 +1,9 @@
-import { UsersRepository } from './repositories/users.repository';
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
+import { UsersRepository } from './repositories/users.repository';
+import { UnauthorizedError } from 'src/common/errors/types/UnauthorizedError';
 @Injectable()
 export class UsersService {
   constructor(private readonly repository: UsersRepository) { }
@@ -11,6 +12,7 @@ export class UsersService {
   }
 
   findAll() {
+    throw new UnauthorizedError('não autorizado');
     return this.repository.findAll();
   }
 
