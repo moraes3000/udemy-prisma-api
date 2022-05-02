@@ -1,21 +1,23 @@
+import { ConflictError } from './../types/ConflictError';
 import {
   Injectable,
   NestInterceptor,
   ExecutionContext,
   CallHandler,
+  ConflictException,
 } from '@nestjs/common';
 import { catchError, Observable } from 'rxjs';
-import { isPrismaError } from '../utils/is-prisma-error.util';
 
 @Injectable()
-export class DatabaseInterceptor implements NestInterceptor {
+export class ConflictInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     return next.handle().pipe(
       catchError(error => {
-        if (isPrismaError(error)) {
-          return 'a';
+        if (error instanceof ConflictError) {
+          throw new ConflictException(error.message);
+        } else {
+          throw error;
         }
-        throw error;
       }),
     );
   }
