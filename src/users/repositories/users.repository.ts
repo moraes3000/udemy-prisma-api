@@ -15,7 +15,7 @@ export class UsersRepository {
   }
 
   async findAll(): Promise<UserEntity[]> {
-    return this.prisma.user.findMany();
+    return this.prisma.user.findMany({ orderBy: [{ id: 'desc' }] });
   }
 
   async findOne(id: number): Promise<UserEntity> {
