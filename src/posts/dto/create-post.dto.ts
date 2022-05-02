@@ -15,6 +15,6 @@ export class CreatePostDto {
   @IsOptional()
   content?: string;
 
-  @IsNumber()
-  authorId: number;
+  @IsEmail()
+  authorEmail: string;
 }
